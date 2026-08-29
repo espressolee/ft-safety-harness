@@ -112,6 +112,21 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(result["qualification_status"], "FAIL")
         self.assertEqual(result["arms"][0]["observed_status"], "UNDERDETERMINED")
 
+    def test_required_marker_uses_universal_newlines(self):
+        with tempfile.TemporaryDirectory() as directory:
+            _, result = self.execute(
+                Path(directory),
+                [
+                    self.arm(
+                        "candidate",
+                        "crlf-clean",
+                        "all_clean",
+                        required_stdout_regex="^SURVIVED$",
+                    )
+                ],
+            )
+        self.assertEqual(result["qualification_status"], "PASS")
+
     def test_generic_exit_two_is_harness_error_not_crash(self):
         with tempfile.TemporaryDirectory() as directory:
             _, result = self.execute(

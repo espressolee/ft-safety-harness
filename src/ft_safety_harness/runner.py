@@ -61,19 +61,25 @@ def _artifact_record(path: Path, output_parent: Path) -> dict[str, Any]:
     }
 
 
+def _decode_for_marker_scan(data: bytes) -> str:
+    return (
+        data.decode("utf-8", errors="replace").replace("\r\n", "\n").replace("\r", "\n")
+    )
+
+
 def _scan_text(path: Path) -> tuple[str, bool]:
     size = path.stat().st_size
     with path.open("rb") as handle:
         if size <= _SCAN_LIMIT:
             data = handle.read()
-            return data.decode("utf-8", errors="replace"), False
+            return _decode_for_marker_scan(data), False
         half = _SCAN_LIMIT // 2
         beginning = handle.read(half)
         handle.seek(max(0, size - half))
         ending = handle.read(half)
-    text = beginning.decode("utf-8", errors="replace")
+    text = _decode_for_marker_scan(beginning)
     text += "\n<FT_SAFETY_HARNESS_OUTPUT_TRUNCATED_FOR_MARKER_SCAN>\n"
-    text += ending.decode("utf-8", errors="replace")
+    text += _decode_for_marker_scan(ending)
     return text, True
 
 

@@ -86,6 +86,8 @@ the sorted key names and an environment digest are recorded.
 
 A generic exit code 1 or 2 is not silently promoted to `CRASH`. An exit 0
 without the required marker is not silently promoted to `CLEAN`.
+Marker matching uses universal-newline normalization (`CRLF` and lone `CR` to
+`LF`); the bound raw stdout/stderr artifacts are never rewritten.
 
 ## Expectations
 

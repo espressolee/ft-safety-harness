@@ -9,6 +9,8 @@ import time
 mode = sys.argv[1]
 if mode == "clean":
     print("SURVIVED")
+elif mode == "crlf-clean":
+    sys.stdout.buffer.write(b"SURVIVED\r\n")
 elif mode == "declared-crash":
     raise SystemExit(99)
 elif mode == "signal-crash":
