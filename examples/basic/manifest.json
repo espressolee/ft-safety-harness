@@ -9,8 +9,8 @@
     {
       "id": "base-positive-control",
       "role": "base",
-      "command": ["{python}", "probe.py", "crash"],
-      "crash_exit_codes": [3],
+      "command": ["{python}", "probe.py", "declared-crash"],
+      "crash_exit_codes": [99],
       "expectation": "at_least_one_crash"
     },
     {

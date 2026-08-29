@@ -1,4 +1,5 @@
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -60,7 +61,12 @@ class RunnerTests(unittest.TestCase):
                         "all_clean",
                         required_stdout_regex="^SURVIVED$",
                     ),
-                    self.arm("crash", "crash", "at_least_one_crash"),
+                    self.arm(
+                        "crash",
+                        "declared-crash",
+                        "at_least_one_crash",
+                        crash_exit_codes=[99],
+                    ),
                     self.arm(
                         "timeout",
                         "timeout",
@@ -77,7 +83,7 @@ class RunnerTests(unittest.TestCase):
                 ],
             )
             verified = verify_result(output)
-        self.assertEqual(result["qualification_status"], "PASS")
+        self.assertEqual(result["qualification_status"], "PASS", msg=result["arms"])
         self.assertEqual(verified["qualification_status"], "PASS")
         self.assertEqual(
             [arm["observed_status"] for arm in result["arms"]],
@@ -113,6 +119,16 @@ class RunnerTests(unittest.TestCase):
             )
         self.assertEqual(result["arms"][0]["outcome_counts"]["HARNESS_ERROR"], 1)
         self.assertEqual(result["arms"][0]["outcome_counts"]["CRASH"], 0)
+
+    @unittest.skipUnless(os.name == "posix", "negative signal return codes are POSIX")
+    def test_negative_signal_return_code_is_crash(self):
+        with tempfile.TemporaryDirectory() as directory:
+            _, result = self.execute(
+                Path(directory),
+                [self.arm("signal", "signal-crash", "at_least_one_crash")],
+            )
+        self.assertEqual(result["qualification_status"], "PASS")
+        self.assertEqual(result["arms"][0]["outcome_counts"]["CRASH"], 1)
 
     def test_tampered_artifact_fails_verification(self):
         with tempfile.TemporaryDirectory() as directory:

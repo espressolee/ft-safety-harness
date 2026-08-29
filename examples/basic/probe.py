@@ -1,6 +1,7 @@
 """Synthetic process outcomes used by the public quick-start manifest."""
 
 import os
+import signal
 import sys
 import time
 
@@ -8,8 +9,10 @@ import time
 mode = sys.argv[1]
 if mode == "clean":
     print("SURVIVED")
-elif mode == "crash":
-    os.abort()
+elif mode == "declared-crash":
+    raise SystemExit(99)
+elif mode == "signal-crash":
+    os.kill(os.getpid(), signal.SIGSEGV)
 elif mode == "timeout":
     time.sleep(60)
 elif mode == "malformed":

@@ -27,7 +27,7 @@ class CliTests(unittest.TestCase):
                     ]
                 )
             summary = json.loads(stdout.getvalue())
-            self.assertEqual(run_code, 0)
+            self.assertEqual(run_code, 0, msg=stdout.getvalue())
             self.assertEqual(summary["qualification_status"], "PASS")
 
             stdout = io.StringIO()

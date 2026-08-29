@@ -8,13 +8,13 @@ table below records only completed qualification runs.
 
 | Controller | Host | Status |
 |---|---|---|
-| CPython 3.10.20 | macOS arm64 | `QUALIFIED` — 18/18 tests + example receipt verification |
-| CPython 3.11.13 | macOS arm64 | `QUALIFIED` — 18/18 tests + example receipt verification |
-| CPython 3.12.11 | macOS arm64 | `QUALIFIED` — 18/18 tests + example receipt verification |
-| CPython 3.13.5 | macOS arm64 | `QUALIFIED` — 18/18 tests + example receipt verification |
-| CPython 3.14.6 | macOS arm64 | `QUALIFIED` — 18/18 tests + example receipt verification |
-| CPython 3.13.5t | macOS arm64 | `QUALIFIED` — 18/18 tests + example receipt verification |
-| CPython 3.14.6t | macOS arm64 | `QUALIFIED` — 18/18 tests + example receipt verification |
+| CPython 3.10.20 | macOS arm64 | `QUALIFIED` — 19/19 tests + example receipt verification |
+| CPython 3.11.13 | macOS arm64 | `QUALIFIED` — 19/19 tests + example receipt verification |
+| CPython 3.12.11 | macOS arm64 | `QUALIFIED` — 19/19 tests + example receipt verification |
+| CPython 3.13.5 | macOS arm64 | `QUALIFIED` — 19/19 tests + example receipt verification |
+| CPython 3.14.6 | macOS arm64 | `QUALIFIED` — 19/19 tests + example receipt verification |
+| CPython 3.13.5t | macOS arm64 | `QUALIFIED` — 19/19 tests + example receipt verification |
+| CPython 3.14.6t | macOS arm64 | `QUALIFIED` — 19/19 tests + example receipt verification |
 | CPython 3.14 | Linux x86_64 | `UNMEASURED` |
 | CPython 3.14 | Windows x86_64 | `UNMEASURED` |
 
