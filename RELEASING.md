@@ -1,7 +1,9 @@
 # Releasing
 
-No release has been published. The first release remains blocked on an owner-approved
-commit, public repository creation/push, remote CI, and external reproduction.
+No release has been published. The canonical repository is public and the
+exact-head remote qualification is recorded in `SUPPORT.md`. The first release
+remains blocked on an independently returned and verified maintainer receipt,
+followed by explicit owner approval for the tag and publication actions.
 
 ## Candidate gate
 
