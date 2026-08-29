@@ -1,0 +1,32 @@
+{
+  "schema_version": "ft-safety-harness.manifest.v1",
+  "name": "synthetic-base-candidate-control",
+  "defaults": {
+    "trials": 2,
+    "timeout_seconds": 2.0
+  },
+  "arms": [
+    {
+      "id": "base-positive-control",
+      "role": "base",
+      "command": ["{python}", "probe.py", "crash"],
+      "crash_exit_codes": [3],
+      "expectation": "at_least_one_crash"
+    },
+    {
+      "id": "candidate",
+      "role": "candidate",
+      "command": ["{python}", "probe.py", "clean"],
+      "required_stdout_regex": "^SURVIVED$",
+      "expectation": "all_clean"
+    },
+    {
+      "id": "gil-control",
+      "role": "control",
+      "command": ["{python}", "probe.py", "clean"],
+      "environment": {"PYTHON_GIL": "1"},
+      "required_stdout_regex": "^SURVIVED$",
+      "expectation": "all_clean"
+    }
+  ]
+}

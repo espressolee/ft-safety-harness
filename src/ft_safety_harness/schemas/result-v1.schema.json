@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ft-safety-harness/result-v1.schema.json",
+  "title": "ft-safety-harness result v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "tool",
+    "run_id",
+    "name",
+    "started_at",
+    "finished_at",
+    "manifest",
+    "provenance",
+    "qualification_status",
+    "arms"
+  ],
+  "properties": {
+    "schema_version": {"const": "ft-safety-harness.result.v1"},
+    "qualification_status": {"enum": ["PASS", "FAIL", "UNASSESSED"]},
+    "arms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "role",
+          "expectation",
+          "outcome_counts",
+          "observed_status",
+          "expectation_status",
+          "trials"
+        ],
+        "properties": {
+          "observed_status": {
+            "enum": [
+              "ALL_CLEAN",
+              "CRASH_OBSERVED",
+              "TIMEOUT_OBSERVED",
+              "UNDERDETERMINED",
+              "HARNESS_ERROR",
+              "MIXED"
+            ]
+          },
+          "expectation_status": {
+            "enum": ["SATISFIED", "VIOLATED", "NOT_DECLARED"]
+          },
+          "trials": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "trial",
+                "outcome",
+                "return_code",
+                "timed_out",
+                "stdout",
+                "stderr"
+              ],
+              "properties": {
+                "outcome": {
+                  "enum": ["CLEAN", "CRASH", "TIMEOUT", "UNDERDETERMINED", "HARNESS_ERROR"]
+                },
+                "stdout": {"$ref": "#/$defs/artifact"},
+                "stderr": {"$ref": "#/$defs/artifact"}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "required": ["path", "size_bytes", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "size_bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}
